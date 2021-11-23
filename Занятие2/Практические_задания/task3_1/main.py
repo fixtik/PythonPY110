@@ -15,7 +15,7 @@ def print_args_kwargs(*args, **kwargs):
 
 
 if __name__ == "__main__":
-    print_args()
-    print_kwargs()
+    print_args('word',1,3)
+    print_kwargs(key='word',word='job')
 
     print_args_kwargs()

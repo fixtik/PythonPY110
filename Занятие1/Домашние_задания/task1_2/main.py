@@ -16,7 +16,7 @@ if __name__ == "__main__":
     def tuple_set(list_):
         return set(zip(map(str.upper, list_), map(str.lower, list_)))
 
-    input_lst = {'U', 'f', 'a', 'b', 'i', 'o', 'E', 'e'}
+    input_lst = ['U', 'f', 'a', 'b', 'i', 'o', 'E', 'e']
     print('Задание 1 \n', tuple_set(input_lst))
 
 #
@@ -60,7 +60,7 @@ if __name__ == "__main__":
 # ['Sheridan Gentry', 'Laila Mckee', 'Ahsan Rivas', 'Conna Gonzalez']
 
     def zip_tuple(list_: list) -> list:
-        return list(map(lambda x: x[0]+' ' +x[1], list_))
+        return list(map(' '.join, list_))
 
 
     input_lst = [('red', 'pink'), ('white', 'black'), ('orange', 'green')]
@@ -114,6 +114,22 @@ if __name__ == "__main__":
 #так и не придумал, куда тут lamda запихать
     print(get_time('year'))
     print(get_time('mon'))
+
+
+    def get_date(*args, **kwargs):
+        date_ = {"year": lambda x: x.year, "month": lambda x: x.month,
+                 "day": lambda x: x.day, "time": lambda x: x.time()}
+
+        for key, kwarg in kwargs.items():
+            print(key, kwarg)
+
+        now = kwargs.get("now", datetime.datetime.now())
+        print(now)
+
+        return date_["year"](now)
+
+
+    print(get_date("date", "year"))
 
 # Задание 4.
 # Напишите скрипт для сложения двух заданных списков, используя map и lambda.
