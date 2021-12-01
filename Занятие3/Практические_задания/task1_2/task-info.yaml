@@ -18,7 +18,7 @@ files:
   visible: true
   placeholders:
   - offset: 178
-    length: 71
+    length: 18
     placeholder_text: '...  # TODO с помощью метода write запишите построчно содержимое
       списка'
     initial_state:
@@ -26,7 +26,7 @@ files:
       offset: 178
     initialized_from_dependency: false
     selected: false
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: f.write(word + "\n")
   text: |
     def task():
@@ -49,5 +49,8 @@ files:
 - name: __init__.py
   visible: false
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 27 Nov 2021 11:07:12 UTC
 record: -1

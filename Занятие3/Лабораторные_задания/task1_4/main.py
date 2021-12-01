@@ -3,7 +3,8 @@ OUTPUT_FILE = "output.txt"
 
 
 def task():
-    ...  # TODO перезаписать содержимое одного файла в другой
+    with open(INPUT_FILE,"r") as ifile, open(OUTPUT_FILE,'w') as ofile:
+        ofile.write(ifile.read().upper())
 
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@ def task_decorator(fn):
                 (_ for _ in kwargs[key])
             except:
                 raise TypeError(
-                    f"Объект {type(kwargs[key])} с ключем {key} и значением {kwargs[key]} не является итерируемым")
+                    f"Объект {type(kwargs[key])} с ключом {key} и значением {kwargs[key]} не является итерируемым")
         result = fn(*args, **kwargs)
         return result
     return wrapper

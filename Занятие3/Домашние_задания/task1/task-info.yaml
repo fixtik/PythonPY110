@@ -13,5 +13,22 @@ files:
 - name: __init__.py
   visible: false
   learner_created: false
-status: Unchecked
+- name: input_file1.txt
+  visible: true
+  learner_created: true
+- name: input_file2.txt
+  visible: true
+  learner_created: true
+- name: output.txt
+  visible: true
+  learner_created: true
+- name: text_file.txt
+  visible: true
+  learner_created: true
+status: Failed
+feedback:
+  message: Incorrect
+  time: Sat, 27 Nov 2021 13:17:25 UTC
+  actual: |
+    [-3, -36, 10, 35, -62, -10, 80, 45, -10, -58, 74, -83, -96, 95, 60, -72, -26, -16, -20, -33]
 record: -1
