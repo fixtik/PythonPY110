@@ -56,40 +56,33 @@ def get_lines_from_file(file_name: str) -> str:
 # Написать генератор, возвращающий  последние n строк из текстового файла,
 # при этом не загружая в память весь файл.
 def get_last_lines_from_file(file_name: str, count_lines: int = 3, separator: str ='\n') -> str:
-    with open(file_name, 'r', encoding='utf-8') as f:
+    with open(file_name) as f:
         #начало count_lines последний строки
-        n, i = 100, count_lines
-        eof = f.seek(0,2)
+        n, i = 50, count_lines
+        eof = f.seek(0, 2)
         while i:
             if eof - n >= 0:
                 f.seek(eof - n)
             else:
                 f.seek(0)
-            print(n, f.tell())
+            print(f.tell())
             try:
-                string_read = f.read(100) #читаем по 100
-                print(string_read)
+                string_read = f.read(n) #читаем по 100
                 c = string_read.count(separator)
-                if i - c >= 0:
-                    i -= c
-                    n += 100
+                if i - c > 0:
+                    n += 50
                 else:
-                    indx = 1
+                    indx = 0
                     while i:
-                        print(string_read[:indx:-1])
-                        indx = string_read[:indx:-1].find(separator)
+                        indx = string_read.rfind(separator, 0, indx-1)
                         i -= 1
-                    n += len(string_read) - indx + 1
+                    n -= indx
             except:
-                n += 1 #в случае ошибки декодирования слдвигаемся вправо на 1
-        f.seek(eof - n, 0)
-        print(eof, n, f.tell())
+                n -= 1 #в случае ошибки декодирования слдвигаемся вправо на 1
+        f.seek(eof-n, 0)
         while f:
-            try:
-                yield f.readline()
-            except:
-                n -=1
-                f.seek(eof - n, 0)
+            yield f.readline()
+
 
 def generator_file(file_name: str, list_len=10):
     with open(file_name, 'w') as ofile:
@@ -127,6 +120,6 @@ if __name__ == "__main__":
         print(next(iter_file_line), end='')
 
 #Доп задание 5
-    # iter_file_line_from_end = get_last_lines_from_file(task3, count_lines=3)
-    # for _ in range(2):
+    # iter_file_line_from_end = get_last_lines_from_file(task3, count_lines=2)
+    # for _ in range(4):
     #     print(next(iter_file_line_from_end), end='')
