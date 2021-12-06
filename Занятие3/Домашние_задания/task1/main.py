@@ -1,11 +1,11 @@
 import random
-import sys
+
 
 
 # ДОП ЗАДАНИЕ 1
 # Написать декоратор, сохраняющий результат в файл output.txt помимо возвращения.
 # Результаты должны накапливаться в файле.
-import sys
+
 
 
 def my_decorator(fn):
@@ -55,33 +55,28 @@ def get_lines_from_file(file_name: str) -> str:
 #ДОП ЗАДАНИЕ 5
 # Написать генератор, возвращающий  последние n строк из текстового файла,
 # при этом не загружая в память весь файл.
-def get_last_lines_from_file(file_name: str, count_lines: int = 3, separator: str ='\n') -> str:
+def get_last_lines_from_file(file_name: str, count_lines: int = 3):
     with open(file_name) as f:
         #начало count_lines последний строки
-        n, i = 50, count_lines
+        n, i = 100, count_lines
         eof = f.seek(0, 2)
         while i:
             if eof - n >= 0:
                 f.seek(eof - n)
             else:
                 f.seek(0)
-            print(f.tell())
             try:
-                string_read = f.read(n) #читаем по 100
-                c = string_read.count(separator)
-                if i - c > 0:
-                    n += 50
+                string_read = f.readlines()
+                if i+1 - len(string_read) > 0:
+                    n += 100
                 else:
-                    indx = 0
-                    while i:
-                        indx = string_read.rfind(separator, 0, indx-1)
-                        i -= 1
-                    n -= indx
+                    string_read = string_read[-i:]
+                    i -= len(string_read)
             except:
                 n -= 1 #в случае ошибки декодирования слдвигаемся вправо на 1
-        f.seek(eof-n, 0)
-        while f:
-            yield f.readline()
+    last_lines = iter(string_read)
+    for _ in range(len(string_read)):
+        yield next(last_lines)
 
 
 def generator_file(file_name: str, list_len=10):
@@ -100,26 +95,32 @@ if __name__ == "__main__":
     fn1 = "input_file1.txt"
     fn2 = "input_file2.txt"
     task3 ="text_file.txt"
-#
+
     generator_file(fn1)
     generator_file(fn2)
+
+    print(f"{'-'*5} Задание 1 {'-'*5}".rjust(25,'-'))
     print(reader_file(fn1, fn2))
 
 # #Доп задание 2
+    print(f"\n{'-' * 5} Доп задание 2 {'-' * 5}")
     get_symbol = get_count_symbols(fn1)
     print(next(get_symbol))
 
 # #Доп задание 3
+    print(f"\n{'-' * 5} Доп задание 3 {'-' * 5}")
     iter_file = get_words_from_file(task3)
     for _ in range(10):
         print(next(iter_file))
 
 # #Доп задание 4
+    print(f"\n{'-' * 5} Доп задание 4 {'-' * 5}")
     iter_file_line = get_lines_from_file(task3)
     for _ in range(5):
         print(next(iter_file_line), end='')
 
 #Доп задание 5
-    # iter_file_line_from_end = get_last_lines_from_file(task3, count_lines=2)
-    # for _ in range(4):
-    #     print(next(iter_file_line_from_end), end='')
+    print(f"\n{'-' * 5} Доп задание 5 {'-' * 5}")
+    iter_file_line_from_end = get_last_lines_from_file(task3, count_lines=5)
+    for _ in range(5):
+        print(next(iter_file_line_from_end), end='')
