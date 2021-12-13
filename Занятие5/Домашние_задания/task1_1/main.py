@@ -1,17 +1,19 @@
+
+
+def fabric_decorator(arg_dec: int):
+    def decorator(fn):
+        def wrapper(*args):
+            result = 0
+            for _ in range(arg_dec):
+                result += fn(*args)
+            return result / arg_dec
+        return wrapper
+    return decorator
+
+@fabric_decorator(4)
 def func_add(adder: int = 1, base: int =1) -> int:
     return adder + base
 
-
-def decorator(fn):
-    def wrapper(*args):
-        print('wrapper_1')
-        result = fn(*args)
-        return result
-    return wrapper
-
-
 if __name__ == "__main__":
     # Write your solution here
-    dec_f = decorator(func_add)
-
-    print(dec_f(1,2))
+    print(func_add(2,2))

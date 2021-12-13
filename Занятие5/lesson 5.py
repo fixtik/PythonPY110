@@ -1,6 +1,8 @@
 import datetime
 import random
-import time
+from mimesis import Person
+import json
+import re
 
 
 def task1(lst: list) -> int:
@@ -133,3 +135,48 @@ def task7():
 
 
 task7()
+
+def task7_1(user_count: int, out_file: str = 'Users.txt'):
+    person = Person('ru')
+    with open(out_file, 'w') as f:
+        for _ in range(user_count):
+            dict_ = {'name': person.first_name(),
+                     'surename': person.surname(),
+                     'login': '@' + person.username(mask='l_l'),
+                     'password': person.password(),
+                     'email': person.email(),
+                     'phone': person.telephone(),
+                     'register_time': datetime.datetime.now().isoformat()
+                 }
+            json.dump(dict_, f, indent=4, ensure_ascii=False)
+
+    return None
+
+
+print(task7_1(3))
+
+def task8(time: datetime = datetime.datetime.now(), mask: str = "YYYY-mm-dd HH:MM:SS") -> str:
+        def change_lit(pattern: str, code: str, f_mask: str) -> str:
+            return re.sub(pattern, code, f_mask)
+
+        YEAR = r'[yY]{4}'
+        SHORT_YEAR = r'[yY]{2}'
+        MONTH = r'm{1,2}'
+        DAY = r'd{1,2}'
+        HOUR = r'H{1,2}'
+        MINUTES = r'M{1,2}'
+        SECONDS = r'S{1,2}'
+        dict_pattern = {YEAR : '%Y',
+                        SHORT_YEAR: '%y',
+                        MONTH: '%m',
+                        DAY: '%d',
+                        HOUR: '%H',
+                        MINUTES: '%M',
+                        SECONDS: '%S'}
+
+        for key, value in dict_pattern.items():
+            mask = change_lit(key, value, mask)
+        return time.strftime(mask)
+
+
+print(task8())
